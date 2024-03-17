@@ -2,6 +2,10 @@ const express = require('express')
 const path = require("path");
 const app = express()
 const jwt = require('jsonwebtoken')
+require('dotenv').config()
+const PORT = process.env.PORT
+
+
 app.use(express.static('public'));
 
 
@@ -35,6 +39,6 @@ app.get('/teams', (req, res) => {
     })
 })
 
-app.listen(3000, () => {
-    console.log('Server listen at http://localhost:3000')
+app.listen(PORT, () => {
+    console.log('Server listen at http://localhost:' + PORT)
 })
