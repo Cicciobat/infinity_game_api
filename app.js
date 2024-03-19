@@ -18,7 +18,6 @@ app.use(express.static('public'));
 
 const verifyToken = (req, res, next) => {
     const token = req.header('Authorization');
-    console.log(token.toString())
 
     try {
         req.user = jwt.verify(token, SECRET_KEY);
