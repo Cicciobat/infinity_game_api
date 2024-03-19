@@ -23,7 +23,7 @@ const verifyToken = (req, res, next) => {
         req.user = jwt.verify(token, SECRET_KEY);
         next();
     } catch (error) {
-        return res.status(401).json({message: 'Unauthorized'});
+        return res.status(401).sendFile(path.join(__dirname, '/web/401.html'));
     }
 }
 
