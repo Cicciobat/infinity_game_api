@@ -57,7 +57,7 @@ app.get('/',  (req, res) => (
 app.get('/players', verifyToken,  (req, res) => {
     return res.status(200).sendFile(path.join(__dirname, '/assets/players.json'), {
         headers: {
-            'Content-Type': 'application/json',
+            'Content-Type': 'application/json; charset=UTF-8',
             'x-timestamp': Date.now(),
             'Age': 0
         }
@@ -67,7 +67,7 @@ app.get('/players', verifyToken,  (req, res) => {
 app.get('/teams',verifyToken, (req, res) => {
     return res.status(200).sendFile(path.join(__dirname, '/assets/teams.json'), {
         headers: {
-            'Content-Type': 'application/json',
+            'Content-Type': 'application/json; charset=UTF-8',
             'x-timestamp': Date.now(),
             'Age': 0
         }
@@ -76,11 +76,11 @@ app.get('/teams',verifyToken, (req, res) => {
 
 app.post('/auth', generateToken,  (req, res) => {
     res.headers = {
-        'Content-Type': 'application/json',
+        'Content-Type': 'text/plain; charset=UTF-8',
         'x-timestamp': Date.now(),
         'Age': 0
     }
-    return res.status(200).json(req.token)
+    return res.status(200).send(req.token)
 })
 
 
