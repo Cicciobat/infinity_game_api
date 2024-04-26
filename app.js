@@ -4,6 +4,8 @@ const app = express()
 const jwt = require('jsonwebtoken')
 const cors = require("cors");
 const bodyParser = require("body-parser");
+const fs = require("fs");
+const e = require("express");
 require('dotenv').config()
 const PORT = process.env.PORT
 const SECRET_KEY = process.env.SECRET_KEY
@@ -64,7 +66,7 @@ app.get('/players', verifyToken,  (req, res) => {
     })
 })
 
-app.get('/teams',verifyToken, (req, res) => {
+app.get('/teams', verifyToken, (req, res) => {
     return res.status(200).sendFile(path.join(__dirname, '/assets/teams.json'), {
         headers: {
             'Content-Type': 'application/json; charset=UTF-8',
@@ -80,6 +82,22 @@ app.post('/auth', generateToken,  (req, res) => {
         'x-timestamp': Date.now(),
         'Age': 0
     }
+    return res.status(200).send(req.token)
+})
+
+app.post('/queue/result', verifyToken,  (req, res) => {
+    const path = '/var/log/efootball_downloader';
+    let currentDate = (new Date()).toLocaleDateString('en-CA');
+
+    res.headers = {
+        'Content-Type': 'text/plain; charset=UTF-8',
+        'x-timestamp': Date.now(),
+        'Age': 0
+    }
+
+    fs.writeFile(`${path}/${currentDate}.log`, req.body.message, {flag: 'a+'}, err => {
+        console.log(err)
+    })
     return res.status(200).send(req.token)
 })
 
